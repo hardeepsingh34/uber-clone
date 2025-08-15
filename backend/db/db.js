@@ -5,7 +5,7 @@ function connectToDb(){
      .then(()=>{
             console.log("connect to DB");
 })
-.catch(err => conosole.log(err));
+.catch(err => console.log(err));
 }
 
 module.exports = connectToDb;

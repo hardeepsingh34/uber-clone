@@ -80,3 +80,78 @@ Send a JSON object with the following structure:
 - The `email`, `fullname.firstname`, and `password` fields are required.
 - `fullname.lastname` is optional.
 - The endpoint returns a JWT token and user data on successful registration.
+
+# User Login Endpoint
+
+## POST `/users/login`
+
+Authenticates a user and returns a JWT token.
+
+### Request Body
+
+Send a JSON object with the following structure:
+
+```json
+{
+  "email": "string (valid email, required)",
+  "password": "string (required)"
+}
+```
+
+### Example
+
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "yourPassword123"
+}
+```
+
+### Responses
+
+- **200 OK**
+  - User authenticated successfully.
+  - Returns: `{ "token": "jwt_token", "user": { ...userData } }`
+
+#### Example Response
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "_id": "665f1c2e8e4b2a0012a3b456",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+    // ...other user fields...
+  }
+}
+```
+
+- **400 Bad Request**
+  - Invalid credentials or missing required fields.
+  - Returns: `{ "error": [ ...validationErrors ] }`
+
+#### Example Error Response
+
+```json
+{
+  "error": [
+    {
+      "msg": "Invalid Email or Password",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+- **500 Internal Server Error**
+  - Unexpected server error.
+
+### Notes
+
+- Both `email` and `password` fields are required.
+- The endpoint returns a JWT token and user data on successful authentication.
