@@ -319,3 +319,174 @@ Send a JSON object with the following structure:
 - All vehicle fields are required.
 - The endpoint validates email, password, and vehicle details.
 - Only registration is currently documented for captains.
+
+# Captain Login Endpoint
+
+## POST `/captains/login`
+
+Authenticates a captain and returns a JWT token in a cookie.
+
+### Request Body
+
+```json
+{
+  "email": "string",      // required, valid email
+  "password": "string"    // required, min 6 chars
+}
+```
+
+### Example
+
+```json
+{
+  "email": "alice.smith@example.com",
+  "password": "securePass123"
+}
+```
+
+### Responses
+
+- **200 OK**
+
+```json
+{
+  "success": true
+}
+```
+
+- **400 Bad Request**
+
+```json
+{
+  "error": [
+    {
+      "msg": "Invalid Email", // or other validation message
+      "param": "email",       // or "password"
+      "location": "body"
+    }
+  ]
+}
+```
+
+- **401 Unauthorized**
+
+```json
+{
+  "message": "Invalid email or password"
+}
+```
+
+- **500 Internal Server Error**
+
+```json
+{
+  "message": "Unexpected server error"
+}
+```
+
+### Notes
+
+- Both `email` and `password` are required.
+- JWT token is set in an HTTP-only cookie on success.
+
+# Captain Profile Endpoint
+
+## GET `/captains/profile`
+
+Retrieves the authenticated captain's profile information.
+
+### Authentication
+
+Requires a valid JWT token in the `Authorization` header as `Bearer <token>` or in the `token` cookie.
+
+### Responses
+
+- **200 OK**
+
+```json
+{
+  "_id": "665f1c2e8e4b2a0012a3b789",
+  "fullname": {
+    "firstname": "Alice",
+    "lastname": "Smith"
+  },
+  "email": "alice.smith@example.com",
+  "vehicle": {
+    "color": "Red",
+    "plate": "XYZ1234",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+  // ...other captain fields...
+}
+```
+
+- **401 Unauthorized**
+
+```json
+{
+  "message": "Access denied, no token provided"
+}
+// or
+{
+  "message": "Invalid token"
+}
+```
+
+- **500 Internal Server Error**
+
+```json
+{
+  "message": "Unexpected server error"
+}
+```
+
+### Notes
+
+- This endpoint requires authentication.
+- Returns the profile of the currently authenticated captain.
+
+# Captain Logout Endpoint
+
+## POST `/captains/logout`
+
+Logs out the authenticated captain by blacklisting their JWT token.
+
+### Authentication
+
+Requires a valid JWT token in the `Authorization` header as `Bearer <token>` or in the `token` cookie.
+
+### Responses
+
+- **200 OK**
+
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+- **401 Unauthorized**
+
+```json
+{
+  "message": "Access denied, no token provided"
+}
+// or
+{
+  "message": "Invalid token"
+}
+```
+
+- **500 Internal Server Error**
+
+```json
+{
+  "message": "Unexpected server error"
+}
+```
+
+### Notes
+
+- This endpoint requires authentication.
+- The captain's JWT token is invalidated after logout.
