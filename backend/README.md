@@ -155,3 +155,80 @@ Send a JSON object with the following structure:
 
 - Both `email` and `password` fields are required.
 - The endpoint returns a JWT token and user data on successful authentication.
+
+# User Profile Endpoint
+
+## GET `/users/profile`
+
+Retrieves the authenticated user's profile information.
+
+### Authentication
+
+Requires a valid JWT token in the `Authorization` header as `Bearer <token>` or in the `token` cookie.
+
+### Responses
+
+- **200 OK**
+  - Returns: `{ ...userData }`
+
+#### Example Response
+
+```json
+{
+  "_id": "665f1c2e8e4b2a0012a3b456",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com"
+  // ...other user fields...
+}
+```
+
+- **401 Unauthorized**
+  - Missing or invalid token.
+  - Returns: `{ "message": "Access denied, no token provided" }` or `{ "message": "Invalid token" }`
+
+- **500 Internal Server Error**
+  - Unexpected server error.
+
+### Notes
+
+- This endpoint requires authentication.
+- Returns the profile of the currently authenticated user.
+
+# User Logout Endpoint
+
+## POST `/users/logout`
+
+Logs out the authenticated user by blacklisting their JWT token.
+
+### Authentication
+
+Requires a valid JWT token in the `Authorization` header as `Bearer <token>` or in the `token` cookie.
+
+### Responses
+
+- **200 OK**
+  - User logged out successfully.
+  - Returns: `{ "message": "Logged out successfully" }`
+
+#### Example Response
+
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+- **401 Unauthorized**
+  - Missing or invalid token.
+  - Returns: `{ "message": "Access denied, no token provided" }` or `{ "message": "Invalid token" }`
+
+- **500 Internal Server Error**
+  - Unexpected server error.
+
+### Notes
+
+- This endpoint requires authentication.
+- The user's JWT token is invalidated after logout.

@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const {body} = require('express-validator');
 const userController = require('../controllers/user.controller');
+const authMiddleware = require('../middlewares/auth.middleware');
+const { route } = require('../app');
 
 // User registration and login routes
 // Validation is done using express-validator
@@ -24,5 +26,6 @@ router.post('/login',[
 ],
 userController.loginUser);
 
-// Export the router to be used in the main app file
+router.get("/profile",authMiddleware.authUser,userController.getUserProfile);   
+router.post("/logout", authMiddleware.authUser, userController.logoutUser);
 module.exports = router; 
