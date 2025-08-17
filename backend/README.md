@@ -232,3 +232,90 @@ Requires a valid JWT token in the `Authorization` header as `Bearer <token>` or 
 
 - This endpoint requires authentication.
 - The user's JWT token is invalidated after logout.
+
+# Captain Registration Endpoint
+
+## POST `/captains/registor`
+
+Registers a new captain (driver) in the system.
+
+### Request Body
+
+Send a JSON object with the following structure:
+
+```json
+{
+  "fullname": {
+    "firstname": "string (min 3 chars, required)",
+    "lastname": "string (optional)"
+  },
+  "email": "string (valid email, required)",
+  "password": "string (min 6 chars, required)",
+  "vehicle": {
+    "color": "string (min 3 chars, required)",
+    "plate": "string (min 3 chars, required)",
+    "capacity": "integer (min 1, required)",
+    "vehicleType": "string (car | bike | auto, required)"
+  }
+}
+```
+
+### Example
+
+```json
+{
+  "fullname": {
+    "firstname": "Alice",
+    "lastname": "Smith"
+  },
+  "email": "alice.smith@example.com",
+  "password": "securePass123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "XYZ1234",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Responses
+
+- **200 OK**
+  - Captain registered successfully.
+  - Returns: `{ "success": true }`
+
+#### Example Response
+
+```json
+{
+  "success": true
+}
+```
+
+- **400 Bad Request**
+  - Validation failed, missing required fields, or captain already exists.
+  - Returns: `{ "error": [ ...validationErrors ] }` or `{ "message": "Captain already exists" }`
+
+#### Example Error Response
+
+```json
+{
+  "error": [
+    {
+      "msg": "Invalid Email",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+- **500 Internal Server Error**
+  - Unexpected server error.
+
+### Notes
+
+- All vehicle fields are required.
+- The endpoint validates email, password, and vehicle details.
+- Only registration is currently documented for captains.
