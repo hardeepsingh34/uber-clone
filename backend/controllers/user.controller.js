@@ -28,7 +28,7 @@ module.exports.registerUser = async( req, res ,next )=>{
       res.cookie("token", token, {
   httpOnly: true,
   sameSite: "strict"
-}).json({ success: true });
+}).json({token, user});
 
 }
 module.exports.loginUser = async( req, res ,next )=>{
@@ -53,7 +53,7 @@ module.exports.loginUser = async( req, res ,next )=>{
       res.cookie("token", token, {
   httpOnly: true,
   sameSite: "strict"
-}).json({ success: true });
+}).json({token, user});
 
 }
 module.exports.getUserProfile = async (req, res, next) => { 

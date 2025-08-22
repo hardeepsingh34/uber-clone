@@ -34,7 +34,7 @@ module.exports.registerCaptain = async (req, res, next) => {
     res.cookie("token", token, {
         httpOnly: true,
         sameSite: "strict"
-    }).json({ success: true });
+    }).json({ token, captain });
 }
 module.exports.loginCaptain = async (req, res, next) => {
     const error = validationResult(req);
@@ -58,7 +58,7 @@ module.exports.loginCaptain = async (req, res, next) => {
     res.cookie("token", token, {
         httpOnly: true,
         sameSite: "strict"
-    }).json({ success: true });
+    }).json({ token, captain });
 }
 
 module.exports.getCaptainProfile = async (req, res, next) => {
