@@ -20,3 +20,8 @@ app.get('/',(req, res)=>{
 app.use("/user", userRoutes);
 app.use("/captain",  captainRoutes);
 module.exports = app;
+
+// PORT = 4000
+// DB_CONNECT = mongodb://0.0.0.0/uber-clone
+// JWT_SECRET=user-vedio-secret 
+// GOOGLE_MAPS_API=AIzaSyCsVu4ewaRjDPGUgTL2Kp_pv40FYxYu19s
