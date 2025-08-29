@@ -26,8 +26,8 @@ const ConfirmRide = (props) => {
 <i className="ri-map-pin-fill"></i>
         </div>
         <div className='text-sm ml-4'>
-          <h1>562/11-A</h1>
-          <h4 className='text-[12px] text-gray-600'>knakariya Talab,bhopal</h4>
+          <h1>543/65-D</h1>
+          <h4 className='text-[12px] text-gray-600'>81 sector,moholi</h4>
        
         </div>
     </div>
@@ -36,8 +36,8 @@ const ConfirmRide = (props) => {
 <i className="ri-currency-fill"></i>
         </div>
         <div className='text-sm ml-4'>
-          <h1>562/11-A</h1>
-          <h4 className='text-[12px] text-gray-600'>knakariya Talab,bhopal</h4>
+          <h1>₹193.19</h1>
+          <h4 className='text-[12px] text-gray-600'>cash cash</h4>
        
         </div>
     </div>
