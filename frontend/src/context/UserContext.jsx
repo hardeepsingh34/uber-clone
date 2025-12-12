@@ -11,7 +11,7 @@ const UserContext = ({ children }) => {
             firstName: '',
             lastName: ''
         }
-    })
+    });
 
     return (
         <div>

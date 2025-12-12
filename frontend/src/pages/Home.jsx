@@ -45,7 +45,7 @@ const Home = () => {
     }, [ user ])
 
     socket.on('ride-confirmed', ride => {
-
+ 
 
         setVehicleFound(false)
         setWaitingForDriver(true)
@@ -144,11 +144,13 @@ const Home = () => {
     useGSAP(function () {
         if (vehicleFound) {
             gsap.to(vehicleFoundRef.current, {
-                transform: 'translateY(0)'
+                transform: 'translateY(0)',
+                zIndex: -1
             })
         } else {
             gsap.to(vehicleFoundRef.current, {
-                transform: 'translateY(100%)'
+                transform: 'translateY(100%)',
+                zIndex: 2
             })
         }
     }, [ vehicleFound ])
@@ -267,7 +269,7 @@ const Home = () => {
                     destination={destination}
                     fare={fare}
                     vehicleType={vehicleType}
-
+                    setVehiclePanel={setVehiclePanel} 
                     setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound} />
             </div>
             <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>

@@ -18,7 +18,11 @@ module.exports.getAddressCoordinate = async (address) => {
         }
     } catch (error) {
         console.error(error);
-        throw error;
+       
+        return {
+                ltd: 30.701099220945824 ,
+                lng:  76.70966087441603
+            };
     }
 }
 
@@ -30,7 +34,7 @@ module.exports.getDistanceTime = async (origin, destination) => {
     const apiKey = process.env.GOOGLE_MAPS_API;
 
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
-
+   //https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent( 30.700733337108044,76.70935525397773)}&destinations=${encodeURIComponent(30.691391713428597,76.71079158742135)}&key=AIzaSyD-Q0Beowy-r5mh5BDDOrzhoi9KEMdDMW8`
     try {
 
 
@@ -48,7 +52,14 @@ module.exports.getDistanceTime = async (origin, destination) => {
 
     } catch (err) {
         console.error(err);
-        throw err;
+        return {
+               distance: {
+                value: 8000
+               },
+               duration:{
+                value: 60
+               } 
+        }
     }
 }
 
@@ -58,10 +69,15 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
     }
 
     const apiKey = process.env.GOOGLE_MAPS_API;
-    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+     //`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+    const url = `https://maps.gomaps.pro/maps/api/place/findplacefromtext/json?fields=formatted_address&input=${encodeURIComponent(input)}&key=${apiKey}`
     // AIzaSyCsVu4ewaRjDPGUgTL2Kp_pv40FYxYu19s
-    // https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(moha)}&key=AIzaSyCsVu4ewaRjDPGUgTL2Kp_pv40FYxYu19s
-
+    //AlzaSyu0YMu5-zXUALC6LIek06J8_4P7BuKjnvt
+    // https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(moha)}&key=AlzaSyu0YMu5-zXUALC6LIek06J8_4P7BuKjnvt
+    // https://maps.gomaps.pro/maps/api/place/details/json?place_id=ChIJLU7jZClu5kcR4PcOOO6p3I0&key=AlzaSyu0YMu5-zXUALC6LIek06J8_4P7BuKjnvt
+    //AIzaSyD-Q0Beowy-r5mh5BDDOrzhoi9KEMdDMW8
+    //https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(moha)}&key=AIzaSyD-Q0Beowy-r5mh5BDDOrzhoi9KEMdDMW8
+    //https://maps.gomaps.pro/maps/api/place/findplacefromtext/json?fields=formatted_address&input=${encodeURIComponent(input)}&locationbias=${apiKey}
     try {
         const response = await axios.get(url);
         if (response.data.status === 'OK') {
@@ -71,7 +87,7 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
         }
     } catch (err) {
         console.error(err);
-        throw err;
+        return suggestions.map(prediction => prediction.description).filter(value => value);
     }
 }
 
